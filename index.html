@@ -1,1 +1,159 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pesan Pin / Gantungan Custom</title>
+
+<style>
+body{
+  font-family:system-ui;
+  text-align:center;
+  background:#f1f5f9;
+  margin:0;
+}
+
+.container{
+  max-width:420px;
+  margin:auto;
+  padding:20px;
+}
+
+.upload{
+  display:block;
+  margin:15px 0;
+  padding:12px;
+  background:#4f46e5;
+  color:white;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+input, select{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid #cbd5e1;
+}
+
+/* MOCKUP PIN */
+.pin{
+  position:relative;
+  width:200px;
+  height:200px;
+  margin:20px auto;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 30%, #ffffff, #e5e7eb 60%, #cbd5e1);
+  box-shadow:
+    inset 0 0 0 10px #d1d5db,
+    inset 0 0 20px rgba(0,0,0,0.15),
+    0 15px 30px rgba(0,0,0,0.2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.design{
+  width:78%;
+  height:78%;
+  border-radius:50%;
+  overflow:hidden;
+}
+
+.design img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.total{
+  font-size:20px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.btn{
+  display:block;
+  width:100%;
+  padding:14px;
+  margin-top:15px;
+  background:#22c55e;
+  color:white;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Pesan Pin / Gantungan Custom</h2>
+
+<select id="produk">
+  <option value="Pin">Pin Peniti</option>
+  <option value="Gantungan">Gantungan Kunci</option>
+</select>
+
+<label class="upload">
+<input type="file" accept="image/*" onchange="preview(event)" hidden>
+Upload Desain
+</label>
+
+<div class="pin">
+  <div class="design">
+    <img id="imgPreview">
+  </div>
+</div>
+
+<input type="text" id="nama" placeholder="Nama Pemesan">
+<input type="text" id="hp" placeholder="No WhatsApp Pemesan">
+
+<input type="number" id="qty" placeholder="Jumlah Pesanan" oninput="hitung()">
+
+<div class="total" id="total">Total: Rp 0</div>
+
+<button class="btn" onclick="kirimWA()">Kirim Pesanan via WhatsApp</button>
+</div>
+
+<script>
+function preview(e){
+  document.getElementById("imgPreview").src =
+  URL.createObjectURL(e.target.files[0]);
+}
+
+function hitung(){
+  let qty = document.getElementById("qty").value;
+  let total = qty * 5000;
+  document.getElementById("total").innerText =
+  "Total: Rp " + total.toLocaleString();
+}
+
+function kirimWA(){
+  let produk = document.getElementById("produk").value;
+  let nama = document.getElementById("nama").value;
+  let hp = document.getElementById("hp").value;
+  let qty = document.getElementById("qty").value;
+  let total = qty * 5000;
+
+  let pesan =
+`Pesanan Custom
+Produk: ${produk}
+Nama: ${nama}
+WA: ${hp}
+Jumlah: ${qty}
+Total: Rp ${total}`;
+
+  window.open(
+  "https://wa.me/628114568286?text=" +
+  encodeURIComponent(pesan),
+  "_blank");
+}
+</script>
+
+</body>
+</html>
